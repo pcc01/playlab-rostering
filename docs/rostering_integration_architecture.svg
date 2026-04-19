@@ -1,0 +1,168 @@
+<svg width="100%" viewBox="0 0 680 720" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Playlab Rostering Integration Architecture Overview</title>
+  <desc>Architecture showing Clever, ClassLink, and OneRoster feeding into a unified rostering middleware that syncs with Playlab, with compliance and security layers.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: sans-serif; fill: #3d3d3a; }
+      .label-secondary { font-size: 11px; fill: #888780; }
+      .label-primary { font-size: 13px; font-weight: 500; }
+      .label-section { font-size: 11px; fill: #888780; }
+
+      .box-blue   { fill: #E6F1FB; stroke: #185FA5; }
+      .box-teal   { fill: #E1F5EE; stroke: #0F6E56; }
+      .box-purple { fill: #EEEDFE; stroke: #534AB7; }
+      .box-coral  { fill: #FAECE7; stroke: #993C1D; }
+      .box-amber  { fill: #FAEEDA; stroke: #854F0B; }
+      .box-green  { fill: #EAF3DE; stroke: #3B6D11; }
+      .box-gray   { fill: #F1EFE8; stroke: #5F5E5A; }
+      .box-mid    { fill: #F8F7F5; stroke: #888780; }
+
+      .text-blue   { fill: #0C447C; }
+      .text-teal   { fill: #085041; }
+      .text-purple { fill: #3C3489; }
+      .text-coral  { fill: #712B13; }
+      .text-amber  { fill: #633806; }
+      .text-green  { fill: #27500A; }
+      .text-gray   { fill: #444441; }
+
+      .arr { stroke: #888780; stroke-width: 1.2; fill: none; }
+      .divider { stroke: #D3D1C7; stroke-width: 0.5; stroke-dasharray: 4 4; }
+    </style>
+  </defs>
+
+  <!-- Background -->
+  <rect width="680" height="720" fill="#ffffff"/>
+
+  <!-- SOURCE SYSTEMS LABEL -->
+  <text class="label-section" x="40" y="28">Source systems</text>
+  <line x1="40" y1="32" x2="200" y2="32" stroke="#D3D1C7" stroke-width="0.5"/>
+
+  <!-- Clever -->
+  <rect x="20" y="42" width="140" height="56" rx="8" stroke-width="0.5" class="box-blue"/>
+  <text class="label-primary text-blue" x="90" y="67" text-anchor="middle" dominant-baseline="central">Clever API</text>
+  <text class="label-secondary text-blue" x="90" y="85" text-anchor="middle" dominant-baseline="central" font-size="11">SIS sync, SSO, events</text>
+
+  <!-- ClassLink -->
+  <rect x="20" y="118" width="140" height="56" rx="8" stroke-width="0.5" class="box-teal"/>
+  <text class="label-primary text-teal" x="90" y="143" text-anchor="middle" dominant-baseline="central">ClassLink API</text>
+  <text class="label-secondary text-teal" x="90" y="161" text-anchor="middle" dominant-baseline="central" font-size="11">OneRoster, SSO, LDAP</text>
+
+  <!-- OneRoster -->
+  <rect x="20" y="194" width="140" height="56" rx="8" stroke-width="0.5" class="box-purple"/>
+  <text class="label-primary text-purple" x="90" y="219" text-anchor="middle" dominant-baseline="central">OneRoster 1.2</text>
+  <text class="label-secondary text-purple" x="90" y="237" text-anchor="middle" dominant-baseline="central" font-size="11">IMS standard, CSV/REST</text>
+
+  <!-- Arrows from sources to middleware -->
+  <line x1="160" y1="70" x2="228" y2="160" class="arr" stroke="#185FA5" marker-end="url(#arrow)"/>
+  <line x1="160" y1="146" x2="228" y2="166" class="arr" stroke="#0F6E56" marker-end="url(#arrow)"/>
+  <line x1="160" y1="222" x2="228" y2="172" class="arr" stroke="#534AB7" marker-end="url(#arrow)"/>
+
+  <!-- MIDDLEWARE BOX -->
+  <rect x="230" y="110" width="220" height="120" rx="12" fill="#F8F7F5" stroke="#888780" stroke-width="0.5"/>
+  <text class="label-primary" x="340" y="138" text-anchor="middle" dominant-baseline="central" fill="#3d3d3a">Rostering Middleware</text>
+  <text class="label-secondary" x="340" y="158" text-anchor="middle" dominant-baseline="central">Ingest · Normalize · Deduplicate</text>
+  <text class="label-secondary" x="340" y="175" text-anchor="middle" dominant-baseline="central">Validate · Transform · Queue</text>
+  <text class="label-secondary" x="340" y="192" text-anchor="middle" dominant-baseline="central">Conflict resolution · Audit log</text>
+
+  <!-- Arrow middleware to Playlab -->
+  <line x1="450" y1="170" x2="518" y2="170" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- PLAYLAB BOX -->
+  <rect x="520" y="130" width="140" height="80" rx="8" stroke-width="0.5" class="box-coral"/>
+  <text class="label-primary text-coral" x="590" y="160" text-anchor="middle" dominant-baseline="central">Playlab</text>
+  <text class="label-secondary text-coral" x="590" y="178" text-anchor="middle" dominant-baseline="central">Orgs · Classes · Users</text>
+  <text class="label-secondary text-coral" x="590" y="195" text-anchor="middle" dominant-baseline="central">AI app access</text>
+
+  <!-- DIVIDER 1 -->
+  <line x1="40" y1="280" x2="640" y2="280" class="divider"/>
+
+  <!-- PHASE LABELS -->
+  <text class="label-section" x="40" y="300">Implementation phases</text>
+
+  <!-- Phase 1 -->
+  <rect x="20" y="314" width="140" height="76" rx="8" stroke-width="0.5" class="box-blue"/>
+  <text class="label-primary text-blue" x="90" y="338" text-anchor="middle" dominant-baseline="central">Phase 1</text>
+  <text class="label-secondary text-blue" x="90" y="358" text-anchor="middle" dominant-baseline="central">API research &amp;</text>
+  <text class="label-secondary text-blue" x="90" y="374" text-anchor="middle" dominant-baseline="central">schema mapping</text>
+
+  <!-- Phase 2 -->
+  <rect x="180" y="314" width="140" height="76" rx="8" stroke-width="0.5" class="box-teal"/>
+  <text class="label-primary text-teal" x="250" y="338" text-anchor="middle" dominant-baseline="central">Phase 2</text>
+  <text class="label-secondary text-teal" x="250" y="358" text-anchor="middle" dominant-baseline="central">Middleware build</text>
+  <text class="label-secondary text-teal" x="250" y="374" text-anchor="middle" dominant-baseline="central">&amp; data rectification</text>
+
+  <!-- Phase 3 -->
+  <rect x="340" y="314" width="140" height="76" rx="8" stroke-width="0.5" class="box-purple"/>
+  <text class="label-primary text-purple" x="410" y="338" text-anchor="middle" dominant-baseline="central">Phase 3</text>
+  <text class="label-secondary text-purple" x="410" y="358" text-anchor="middle" dominant-baseline="central">Playlab sync &amp;</text>
+  <text class="label-secondary text-purple" x="410" y="374" text-anchor="middle" dominant-baseline="central">provisioning engine</text>
+
+  <!-- Phase 4 -->
+  <rect x="500" y="314" width="140" height="76" rx="8" stroke-width="0.5" class="box-coral"/>
+  <text class="label-primary text-coral" x="570" y="338" text-anchor="middle" dominant-baseline="central">Phase 4</text>
+  <text class="label-secondary text-coral" x="570" y="358" text-anchor="middle" dominant-baseline="central">Compliance, testing</text>
+  <text class="label-secondary text-coral" x="570" y="374" text-anchor="middle" dominant-baseline="central">&amp; EU expansion</text>
+
+  <!-- Phase arrows -->
+  <line x1="160" y1="352" x2="178" y2="352" class="arr" marker-end="url(#arrow)"/>
+  <line x1="320" y1="352" x2="338" y2="352" class="arr" marker-end="url(#arrow)"/>
+  <line x1="480" y1="352" x2="498" y2="352" class="arr" marker-end="url(#arrow)"/>
+
+  <!-- DIVIDER 2 -->
+  <line x1="40" y1="420" x2="640" y2="420" class="divider"/>
+
+  <!-- COMPLIANCE LABEL -->
+  <text class="label-section" x="40" y="440">Compliance &amp; privacy layers (cross-cutting)</text>
+
+  <!-- FERPA -->
+  <rect x="20" y="454" width="140" height="56" rx="8" stroke-width="0.5" class="box-amber"/>
+  <text class="label-primary text-amber" x="90" y="476" text-anchor="middle" dominant-baseline="central">FERPA</text>
+  <text class="label-secondary text-amber" x="90" y="494" text-anchor="middle" dominant-baseline="central">US student data privacy</text>
+
+  <!-- COPPA -->
+  <rect x="180" y="454" width="140" height="56" rx="8" stroke-width="0.5" class="box-amber"/>
+  <text class="label-primary text-amber" x="250" y="476" text-anchor="middle" dominant-baseline="central">COPPA / CIPA</text>
+  <text class="label-secondary text-amber" x="250" y="494" text-anchor="middle" dominant-baseline="central">Under-13 &amp; school nets</text>
+
+  <!-- GDPR -->
+  <rect x="340" y="454" width="140" height="56" rx="8" stroke-width="0.5" class="box-green"/>
+  <text class="label-primary text-green" x="410" y="476" text-anchor="middle" dominant-baseline="central">GDPR</text>
+  <text class="label-secondary text-green" x="410" y="494" text-anchor="middle" dominant-baseline="central">EU data subject rights</text>
+
+  <!-- EU AI Act -->
+  <rect x="500" y="454" width="140" height="56" rx="8" stroke-width="0.5" class="box-green"/>
+  <text class="label-primary text-green" x="570" y="476" text-anchor="middle" dominant-baseline="central">EU AI Act</text>
+  <text class="label-secondary text-green" x="570" y="494" text-anchor="middle" dominant-baseline="central">High-risk AI, transparency</text>
+
+  <!-- DIVIDER 3 -->
+  <line x1="40" y1="540" x2="640" y2="540" class="divider"/>
+
+  <!-- DATA ENTITIES LABEL -->
+  <text class="label-section" x="40" y="560">Core data entities to roster</text>
+
+  <!-- Entity boxes -->
+  <rect x="20" y="572" width="100" height="44" rx="8" stroke-width="0.5" class="box-gray"/>
+  <text class="label-primary text-gray" x="70" y="594" text-anchor="middle" dominant-baseline="central">Districts</text>
+
+  <rect x="136" y="572" width="100" height="44" rx="8" stroke-width="0.5" class="box-gray"/>
+  <text class="label-primary text-gray" x="186" y="594" text-anchor="middle" dominant-baseline="central">Schools</text>
+
+  <rect x="252" y="572" width="100" height="44" rx="8" stroke-width="0.5" class="box-gray"/>
+  <text class="label-primary text-gray" x="302" y="594" text-anchor="middle" dominant-baseline="central">Classes</text>
+
+  <rect x="368" y="572" width="100" height="44" rx="8" stroke-width="0.5" class="box-gray"/>
+  <text class="label-primary text-gray" x="418" y="594" text-anchor="middle" dominant-baseline="central">Teachers</text>
+
+  <rect x="484" y="572" width="100" height="44" rx="8" stroke-width="0.5" class="box-gray"/>
+  <text class="label-primary text-gray" x="534" y="594" text-anchor="middle" dominant-baseline="central">Students</text>
+
+  <!-- Public entities -->
+  <rect x="252" y="636" width="176" height="44" rx="8" stroke-width="0.5" class="box-gray"/>
+  <text class="label-primary text-gray" x="340" y="658" text-anchor="middle" dominant-baseline="central">Public entities</text>
+
+  <!-- Footer note -->
+  <text font-size="10" x="340" y="700" text-anchor="middle" fill="#B4B2A9">Playlab Rostering Integration Architecture · v1.0 · April 2026</text>
+</svg>
