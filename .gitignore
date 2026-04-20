@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-test/
+build/
+
+# Test coverage
+coverage/
+
+# Environment secrets - NEVER commit
+.env
+*.env.local
+*.env.production
+
+# TypeScript source maps (optional - remove if you want them in git)
+*.js.map
+*.d.ts.map
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temp / debug files
+/tmp/
+*.log
+
+# Keep docs/ folder - do NOT ignore it
+!docs/
