@@ -192,8 +192,8 @@ playlab-roster/
 
 ### Install
 ```bash
-git clone https://github.com/pcc01/Playlab_rostering.git
-cd Playlab_rostering
+git clone https://github.com/pcc01/playlab_rostering.git
+cd playlab_rostering
 npm install
 ```
 
