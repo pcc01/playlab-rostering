@@ -1,0 +1,237 @@
+<svg width="100%" viewBox="0 0 680 960" xmlns="http://www.w3.org/2000/svg" role="img">
+  <title>Playlab Rostering Integration Architecture v2.0</title>
+  <desc>Architecture diagram v2.0: three source systems feed a rostering middleware; six implementation phases including OAuth/SSO and country auth adapters; a global AI-audited compliance layer with four configurable categories and an AI audit engine; roster-able entity types split into public and private entities with configurable sub-entity composition.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: sans-serif; }
+      .ts { font-size: 10px; }
+      .tsec { font-size: 10px; fill: #888780; }
+      .divider { stroke: #D3D1C7; stroke-width: 0.5; stroke-dasharray: 4 4; }
+    </style>
+  </defs>
+
+  <rect width="680" height="960" fill="#ffffff"/>
+
+  <!-- SECTION 1: SOURCE SYSTEMS + MIDDLEWARE -->
+  <text class="tsec" x="20" y="24">Source systems</text>
+
+  <rect x="20" y="34" width="140" height="56" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+  <text font-size="13" font-weight="600" x="90" y="57" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Clever API</text>
+  <text class="ts" x="90" y="75" text-anchor="middle" dominant-baseline="central" fill="#185FA5">SIS sync · SSO · Events</text>
+
+  <rect x="20" y="108" width="140" height="56" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text font-size="13" font-weight="600" x="90" y="131" text-anchor="middle" dominant-baseline="central" fill="#085041">ClassLink API</text>
+  <text class="ts" x="90" y="149" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">OneRoster · SSO · LDAP</text>
+
+  <rect x="20" y="182" width="140" height="56" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text font-size="13" font-weight="600" x="90" y="205" text-anchor="middle" dominant-baseline="central" fill="#3C3489">OneRoster 1.2</text>
+  <text class="ts" x="90" y="223" text-anchor="middle" dominant-baseline="central" fill="#534AB7">IMS standard · CSV/REST</text>
+
+  <line x1="160" y1="62" x2="228" y2="148" stroke="#185FA5" stroke-width="1.2" fill="none" marker-end="url(#arrow)"/>
+  <line x1="160" y1="136" x2="228" y2="158" stroke="#0F6E56" stroke-width="1.2" fill="none" marker-end="url(#arrow)"/>
+  <line x1="160" y1="210" x2="228" y2="168" stroke="#534AB7" stroke-width="1.2" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="230" y="100" width="218" height="126" rx="12" fill="#F8F7F5" stroke="#888780" stroke-width="0.5"/>
+  <text font-size="13" font-weight="600" x="339" y="122" text-anchor="middle" dominant-baseline="central" fill="#3d3d3a">Rostering Middleware</text>
+  <text class="ts" x="339" y="141" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">Ingest · Normalize · Deduplicate</text>
+  <text class="ts" x="339" y="157" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">Validate · Transform · Queue</text>
+  <text class="ts" x="339" y="173" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">Conflict resolution · Audit log</text>
+  <text class="ts" x="339" y="189" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">Country/region config layer</text>
+  <text class="ts" x="339" y="205" text-anchor="middle" dominant-baseline="central" fill="#5F5E5A">JIT provisioning · SSO bridge</text>
+
+  <line x1="448" y1="163" x2="518" y2="163" stroke="#888780" stroke-width="1.2" fill="none" marker-end="url(#arrow)"/>
+
+  <rect x="520" y="122" width="140" height="82" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+  <text font-size="13" font-weight="600" x="590" y="150" text-anchor="middle" dominant-baseline="central" fill="#712B13">Playlab</text>
+  <text class="ts" x="590" y="168" text-anchor="middle" dominant-baseline="central" fill="#993C1D">Orgs · Classes · Users</text>
+  <text class="ts" x="590" y="184" text-anchor="middle" dominant-baseline="central" fill="#993C1D">AI app creation access</text>
+
+  <!-- DIVIDER 1 -->
+  <line x1="20" y1="258" x2="660" y2="258" class="divider"/>
+  <text class="tsec" x="20" y="276">Implementation phases</text>
+
+  <!-- Phase 1 -->
+  <rect x="20" y="288" width="95" height="88" rx="8" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.5"/>
+  <text font-size="12" font-weight="600" x="67" y="307" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Phase 1</text>
+  <text class="ts" x="67" y="323" text-anchor="middle" dominant-baseline="central" fill="#185FA5">API Research</text>
+  <text class="ts" x="67" y="338" text-anchor="middle" dominant-baseline="central" fill="#185FA5">&amp; Schema Map</text>
+  <text font-size="9" x="67" y="357" text-anchor="middle" dominant-baseline="central" fill="#185FA5">Wk 1–2</text>
+  <line x1="115" y1="332" x2="125" y2="332" stroke="#B4B2A9" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Phase 2: OAuth/SSO -->
+  <rect x="125" y="288" width="95" height="88" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text font-size="12" font-weight="600" x="172" y="307" text-anchor="middle" dominant-baseline="central" fill="#3C3489">Phase 2</text>
+  <text class="ts" x="172" y="323" text-anchor="middle" dominant-baseline="central" fill="#534AB7">OAuth &amp; SSO</text>
+  <text class="ts" x="172" y="338" text-anchor="middle" dominant-baseline="central" fill="#534AB7">Auth Adapters</text>
+  <text font-size="9" x="172" y="357" text-anchor="middle" dominant-baseline="central" fill="#534AB7">Wk 2–3</text>
+  <line x1="220" y1="332" x2="230" y2="332" stroke="#B4B2A9" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Phase 3 -->
+  <rect x="230" y="288" width="95" height="88" rx="8" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.5"/>
+  <text font-size="12" font-weight="600" x="277" y="307" text-anchor="middle" dominant-baseline="central" fill="#085041">Phase 3</text>
+  <text class="ts" x="277" y="323" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">Middleware</text>
+  <text class="ts" x="277" y="338" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">Build &amp; Ingest</text>
+  <text font-size="9" x="277" y="357" text-anchor="middle" dominant-baseline="central" fill="#0F6E56">Wk 3–5</text>
+  <line x1="325" y1="332" x2="335" y2="332" stroke="#B4B2A9" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Phase 4 -->
+  <rect x="335" y="288" width="95" height="88" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+  <text font-size="12" font-weight="600" x="382" y="307" text-anchor="middle" dominant-baseline="central" fill="#712B13">Phase 4</text>
+  <text class="ts" x="382" y="323" text-anchor="middle" dominant-baseline="central" fill="#993C1D">Data</text>
+  <text class="ts" x="382" y="338" text-anchor="middle" dominant-baseline="central" fill="#993C1D">Rectification</text>
+  <text font-size="9" x="382" y="357" text-anchor="middle" dominant-baseline="central" fill="#993C1D">Wk 5–6</text>
+  <line x1="430" y1="332" x2="440" y2="332" stroke="#B4B2A9" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Phase 5 -->
+  <rect x="440" y="288" width="95" height="88" rx="8" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+  <text font-size="12" font-weight="600" x="487" y="307" text-anchor="middle" dominant-baseline="central" fill="#27500A">Phase 5</text>
+  <text class="ts" x="487" y="323" text-anchor="middle" dominant-baseline="central" fill="#3B6D11">Playlab Sync</text>
+  <text class="ts" x="487" y="338" text-anchor="middle" dominant-baseline="central" fill="#3B6D11">&amp; Provisioning</text>
+  <text font-size="9" x="487" y="357" text-anchor="middle" dominant-baseline="central" fill="#3B6D11">Wk 6–8</text>
+  <line x1="535" y1="332" x2="545" y2="332" stroke="#B4B2A9" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- Phase 6 -->
+  <rect x="545" y="288" width="95" height="88" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+  <text font-size="12" font-weight="600" x="592" y="307" text-anchor="middle" dominant-baseline="central" fill="#633806">Phase 6</text>
+  <text class="ts" x="592" y="323" text-anchor="middle" dominant-baseline="central" fill="#854F0B">Compliance</text>
+  <text class="ts" x="592" y="338" text-anchor="middle" dominant-baseline="central" fill="#854F0B">&amp; EU Audit</text>
+  <text font-size="9" x="592" y="357" text-anchor="middle" dominant-baseline="central" fill="#854F0B">Wk 8–10</text>
+
+  <!-- DIVIDER 2 -->
+  <line x1="20" y1="398" x2="660" y2="398" class="divider"/>
+  <text class="tsec" x="20" y="416">Global compliance layer — AI-audited · configurable per country, region, state, and subdivision</text>
+
+  <!-- Compliance Box 1: Federal Privacy -->
+  <rect x="20" y="428" width="150" height="132" rx="8" fill="#FAEEDA" stroke="#854F0B" stroke-width="0.5"/>
+  <text font-size="12" font-weight="600" x="95" y="447" text-anchor="middle" dominant-baseline="central" fill="#633806">Federal Privacy</text>
+  <rect x="34" y="456" width="122" height="14" rx="4" fill="#EF9F27" fill-opacity="0.3"/>
+  <text font-size="9" x="95" y="463" text-anchor="middle" dominant-baseline="central" fill="#633806">⚙ configurable per country</text>
+  <text class="ts" x="95" y="482" text-anchor="middle" dominant-baseline="central" fill="#633806">FERPA · PPRA (US)</text>
+  <text class="ts" x="95" y="498" text-anchor="middle" dominant-baseline="central" fill="#633806">PIPEDA (Canada)</text>
+  <text class="ts" x="95" y="514" text-anchor="middle" dominant-baseline="central" fill="#633806">POPIA (S. Africa)</text>
+  <text class="ts" x="95" y="530" text-anchor="middle" dominant-baseline="central" fill="#633806">APPs (Australia)</text>
+  <text font-size="9" x="95" y="548" text-anchor="middle" dominant-baseline="central" fill="#854F0B">+ extensible by region</text>
+
+  <!-- Compliance Box 2: Minor Protections -->
+  <rect x="180" y="428" width="150" height="132" rx="8" fill="#FAECE7" stroke="#993C1D" stroke-width="0.5"/>
+  <text font-size="12" font-weight="600" x="255" y="447" text-anchor="middle" dominant-baseline="central" fill="#712B13">Minor Protections</text>
+  <rect x="194" y="456" width="122" height="14" rx="4" fill="#D85A30" fill-opacity="0.25"/>
+  <text font-size="9" x="255" y="463" text-anchor="middle" dominant-baseline="central" fill="#712B13">⚙ configurable per country</text>
+  <text class="ts" x="255" y="482" text-anchor="middle" dominant-baseline="central" fill="#712B13">COPPA · CIPA (US)</text>
+  <text class="ts" x="255" y="498" text-anchor="middle" dominant-baseline="central" fill="#712B13">GDPR Art.8 (EU)</text>
+  <text class="ts" x="255" y="514" text-anchor="middle" dominant-baseline="central" fill="#712B13">AADC (UK)</text>
+  <text class="ts" x="255" y="530" text-anchor="middle" dominant-baseline="central" fill="#712B13">NCC (Australia)</text>
+  <text font-size="9" x="255" y="548" text-anchor="middle" dominant-baseline="central" fill="#993C1D">+ extensible by region</text>
+
+  <!-- Compliance Box 3: Regional Privacy -->
+  <rect x="340" y="428" width="150" height="132" rx="8" fill="#EAF3DE" stroke="#3B6D11" stroke-width="0.5"/>
+  <text font-size="12" font-weight="600" x="415" y="447" text-anchor="middle" dominant-baseline="central" fill="#27500A">Regional Privacy</text>
+  <rect x="354" y="456" width="122" height="14" rx="4" fill="#639922" fill-opacity="0.25"/>
+  <text font-size="9" x="415" y="463" text-anchor="middle" dominant-baseline="central" fill="#27500A">⚙ configurable per region</text>
+  <text class="ts" x="415" y="482" text-anchor="middle" dominant-baseline="central" fill="#27500A">GDPR (EU / EEA)</text>
+  <text class="ts" x="415" y="498" text-anchor="middle" dominant-baseline="central" fill="#27500A">CCPA (California)</text>
+  <text class="ts" x="415" y="514" text-anchor="middle" dominant-baseline="central" fill="#27500A">LGPD (Brazil)</text>
+  <text class="ts" x="415" y="530" text-anchor="middle" dominant-baseline="central" fill="#27500A">PIPL (China)</text>
+  <text font-size="9" x="415" y="548" text-anchor="middle" dominant-baseline="central" fill="#3B6D11">+ extensible by region</text>
+
+  <!-- Compliance Box 4: AI Governance -->
+  <rect x="500" y="428" width="150" height="132" rx="8" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.5"/>
+  <text font-size="12" font-weight="600" x="575" y="447" text-anchor="middle" dominant-baseline="central" fill="#3C3489">AI Governance</text>
+  <rect x="514" y="456" width="122" height="14" rx="4" fill="#7F77DD" fill-opacity="0.25"/>
+  <text font-size="9" x="575" y="463" text-anchor="middle" dominant-baseline="central" fill="#3C3489">⚙ configurable per region</text>
+  <text class="ts" x="575" y="482" text-anchor="middle" dominant-baseline="central" fill="#3C3489">EU AI Act (EU)</text>
+  <text class="ts" x="575" y="498" text-anchor="middle" dominant-baseline="central" fill="#3C3489">NIST AI RMF (US)</text>
+  <text class="ts" x="575" y="514" text-anchor="middle" dominant-baseline="central" fill="#3C3489">UNESCO AI Ethics</text>
+  <text class="ts" x="575" y="530" text-anchor="middle" dominant-baseline="central" fill="#3C3489">AISI (UK)</text>
+  <text font-size="9" x="575" y="548" text-anchor="middle" dominant-baseline="central" fill="#534AB7">+ extensible by region</text>
+
+  <!-- Arrows: compliance boxes to AI engine -->
+  <line x1="95" y1="560" x2="95" y2="574" stroke="#B4B2A9" stroke-width="0.8" fill="none" marker-end="url(#arrow)"/>
+  <line x1="255" y1="560" x2="255" y2="574" stroke="#B4B2A9" stroke-width="0.8" fill="none" marker-end="url(#arrow)"/>
+  <line x1="415" y1="560" x2="415" y2="574" stroke="#B4B2A9" stroke-width="0.8" fill="none" marker-end="url(#arrow)"/>
+  <line x1="575" y1="560" x2="575" y2="574" stroke="#B4B2A9" stroke-width="0.8" fill="none" marker-end="url(#arrow)"/>
+
+  <!-- AI COMPLIANCE AUDIT ENGINE -->
+  <rect x="20" y="576" width="640" height="94" rx="10" fill="#E6F1FB" stroke="#185FA5" stroke-width="0.8"/>
+  <line x1="244" y1="594" x2="244" y2="660" stroke="#B5D4F4" stroke-width="0.5"/>
+  <line x1="456" y1="594" x2="456" y2="660" stroke="#B5D4F4" stroke-width="0.5"/>
+  <text font-size="12" font-weight="700" x="340" y="588" text-anchor="middle" dominant-baseline="central" fill="#0C447C">AI Compliance Audit Engine</text>
+
+  <text font-size="10" font-weight="600" x="132" y="606" text-anchor="middle" dominant-baseline="central" fill="#185FA5">Monitors</text>
+  <text class="ts" x="132" y="623" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Fed. Register · EUR-Lex · ICO</text>
+  <text class="ts" x="132" y="638" text-anchor="middle" dominant-baseline="central" fill="#0C447C">PIPC · CNIL · AISI · OAIC</text>
+  <text class="ts" x="132" y="653" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Weekly automated scans</text>
+  <line x1="246" y1="632" x2="296" y2="632" stroke="#378ADD" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+
+  <text font-size="10" font-weight="600" x="350" y="606" text-anchor="middle" dominant-baseline="central" fill="#185FA5">AI Analysis</text>
+  <text class="ts" x="350" y="623" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Detects legislative changes</text>
+  <text class="ts" x="350" y="638" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Scores compliance risk</text>
+  <text class="ts" x="350" y="653" text-anchor="middle" dominant-baseline="central" fill="#0C447C">by country / state / region</text>
+  <line x1="458" y1="632" x2="498" y2="632" stroke="#378ADD" stroke-width="1" fill="none" marker-end="url(#arrow)"/>
+
+  <text font-size="10" font-weight="600" x="568" y="606" text-anchor="middle" dominant-baseline="central" fill="#185FA5">Alerts &amp; Actions</text>
+  <text class="ts" x="568" y="623" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Notifies Playlab team</text>
+  <text class="ts" x="568" y="638" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Opens compliance ticket</text>
+  <text class="ts" x="568" y="653" text-anchor="middle" dominant-baseline="central" fill="#0C447C">Updates config templates</text>
+
+  <!-- DIVIDER 3 -->
+  <line x1="20" y1="684" x2="660" y2="684" class="divider"/>
+  <text class="tsec" x="20" y="702">Roster-able entity types — entity composition is independently configurable per organization</text>
+
+  <!-- PUBLIC ENTITIES -->
+  <rect x="20" y="712" width="305" height="210" rx="10" fill="#E1F5EE" stroke="#0F6E56" stroke-width="0.8"/>
+  <path d="M32,712 Q20,712 20,724 L20,748 L325,748 L325,724 Q325,712 313,712 Z" fill="#1D9E75"/>
+  <text font-size="12" font-weight="600" x="172" y="727" text-anchor="middle" dominant-baseline="central" fill="#ffffff">Public Entities</text>
+  <text font-size="9" x="172" y="741" text-anchor="middle" dominant-baseline="central" fill="#C0EDDC">Govt. Agencies · Libraries · State Ed. Bodies</text>
+
+  <rect x="32" y="756" width="88" height="34" rx="6" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="76" y="773" text-anchor="middle" dominant-baseline="central" fill="#04342C">Learners</text>
+  <rect x="128" y="756" width="88" height="34" rx="6" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="172" y="773" text-anchor="middle" dominant-baseline="central" fill="#04342C">Schools/Sites</text>
+  <rect x="224" y="756" width="88" height="34" rx="6" fill="#9FE1CB" stroke="#0F6E56" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="268" y="773" text-anchor="middle" dominant-baseline="central" fill="#04342C">Districts/Subs</text>
+
+  <rect x="32" y="802" width="88" height="34" rx="6" fill="#5DCAA5" stroke="#0F6E56" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="76" y="819" text-anchor="middle" dominant-baseline="central" fill="#04342C">Classes</text>
+  <rect x="128" y="802" width="88" height="34" rx="6" fill="#5DCAA5" stroke="#0F6E56" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="172" y="819" text-anchor="middle" dominant-baseline="central" fill="#04342C">Teachers</text>
+  <rect x="224" y="802" width="88" height="34" rx="6" fill="#5DCAA5" stroke="#0F6E56" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="268" y="819" text-anchor="middle" dominant-baseline="central" fill="#04342C">Students</text>
+
+  <text font-size="9" x="172" y="852" text-anchor="middle" dominant-baseline="central" fill="#085041">Light = structural · Dark = participant nodes</text>
+  <text font-size="9" x="172" y="868" text-anchor="middle" dominant-baseline="central" fill="#085041">All sub-entities configurable per org type</text>
+  <text font-size="9" x="172" y="884" text-anchor="middle" dominant-baseline="central" fill="#085041">e.g. libraries roster learners, not students</text>
+  <text font-size="9" x="172" y="900" text-anchor="middle" dominant-baseline="central" fill="#085041">e.g. state ed. orgs roster districts/sub-entities</text>
+
+  <!-- PRIVATE ENTITIES -->
+  <rect x="355" y="712" width="305" height="210" rx="10" fill="#EEEDFE" stroke="#534AB7" stroke-width="0.8"/>
+  <path d="M367,712 Q355,712 355,724 L355,748 L660,748 L660,724 Q660,712 648,712 Z" fill="#7F77DD"/>
+  <text font-size="12" font-weight="600" x="507" y="727" text-anchor="middle" dominant-baseline="central" fill="#ffffff">Private Entities</text>
+  <text font-size="9" x="507" y="741" text-anchor="middle" dominant-baseline="central" fill="#E0DEFC">Charter Schools · Private Schools · Tutoring Ctrs.</text>
+
+  <rect x="367" y="756" width="88" height="34" rx="6" fill="#CCC9F0" stroke="#534AB7" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="411" y="773" text-anchor="middle" dominant-baseline="central" fill="#26215C">Learners</text>
+  <rect x="463" y="756" width="88" height="34" rx="6" fill="#CCC9F0" stroke="#534AB7" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="507" y="773" text-anchor="middle" dominant-baseline="central" fill="#26215C">Schools/Sites</text>
+  <rect x="559" y="756" width="88" height="34" rx="6" fill="#CCC9F0" stroke="#534AB7" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="603" y="773" text-anchor="middle" dominant-baseline="central" fill="#26215C">Districts/Subs</text>
+
+  <rect x="367" y="802" width="88" height="34" rx="6" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="411" y="819" text-anchor="middle" dominant-baseline="central" fill="#26215C">Classes</text>
+  <rect x="463" y="802" width="88" height="34" rx="6" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="507" y="819" text-anchor="middle" dominant-baseline="central" fill="#26215C">Teachers</text>
+  <rect x="559" y="802" width="88" height="34" rx="6" fill="#AFA9EC" stroke="#534AB7" stroke-width="0.5"/>
+  <text class="ts" font-weight="500" x="603" y="819" text-anchor="middle" dominant-baseline="central" fill="#26215C">Students</text>
+
+  <text font-size="9" x="507" y="852" text-anchor="middle" dominant-baseline="central" fill="#3C3489">Light = structural · Dark = participant nodes</text>
+  <text font-size="9" x="507" y="868" text-anchor="middle" dominant-baseline="central" fill="#3C3489">All sub-entities configurable per org type</text>
+  <text font-size="9" x="507" y="884" text-anchor="middle" dominant-baseline="central" fill="#3C3489">e.g. tutoring centers roster learners only</text>
+  <text font-size="9" x="507" y="900" text-anchor="middle" dominant-baseline="central" fill="#3C3489">e.g. private districts include sub-entity orgs</text>
+
+  <!-- FOOTER -->
+  <text font-size="9" x="340" y="940" text-anchor="middle" fill="#B4B2A9">Playlab Rostering Integration Architecture · v2.0 · April 2026</text>
+
+</svg>

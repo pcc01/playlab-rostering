@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "commonjs",
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "typeRoots": [
+      "/home/claude/.npm-global/lib/node_modules/ts-node/node_modules/@types",
+      "/home/claude/.npm-global/lib/node_modules/@types"
+    ],
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "rootDir": "."
+  },
+  "include": ["src/**/*", "tests/**/*", "scripts/**/*"]
+}
